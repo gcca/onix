@@ -12,13 +12,12 @@ add_subdirectory(abseil-cpp)
 option(ONIX_DISABLE_TESTS "Disable tests" OFF)
 
 find_package(PostgreSQL REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS program_options)
 
 function(onix_add_executable name)
   add_executable(${name} ${ARGN})
-  target_compile_options(${name} PRIVATE -DCROW_USE_BOOST -DCROW_DISABLE_STATIC_DIR)
-  target_include_directories(${name} PRIVATE ${CMAKE_SOURCE_DIR}/../resources)
-  target_link_libraries(${name} PRIVATE Boost::system)
+  target_compile_options(${name} PRIVATE -DCROW_USE_BOOST -DCROW_DISABLE_STATIC_DIR -DCROW_JSON_NO_ERROR_CHECK)
+  target_include_directories(${name} PRIVATE ${CMAKE_SOURCE_DIR}/resources ${CMAKE_SOURCE_DIR})
 endfunction()
 
-add_subdirectory(interaction)
+add_subdirectory(onix-interaction)
